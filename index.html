@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Fish Feeder</title>
+    <style>
+        body {
+            background-color: #40A2E3;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .title-bar {
+            text-align: center;
+        }
+
+        .title {
+            text-align: center;
+            color: #FFF6E9;
+            font-size: 3vw;
+        }
+
+        .subtitle {
+            color: #FFF6E9;
+            line-height: 0.1vh;
+            font-size: 2vw;
+        }
+
+        #clock {
+            font-size: 10vw;
+            text-align: center;
+            border: 2px solid #0D9276;
+            border-radius: 20px;
+            color: #FFF6E9;
+            width: auto;
+            height: auto;
+            max-width: 75vw;
+            max-height: 25vh;
+            margin: 5vw 12vw 5vw 12vw;
+        }
+
+        .feeding-btn {
+            text-align: center;
+        }
+
+        .btn-feed {
+            height: 4.5vw;
+            width: 15vw;
+            border: #0D9276 solid 2px;
+            border-radius: 22.4px;
+            background-color: #BBE2EC;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            font-size: 2vw;
+            color:#0D9276 ;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='title-bar'>
+        <h1 class='title'>Fish Feeding Machine</h1>
+        <p class='subtitle'><u>Made by Adarsh Pratap Singh with❤️</u></p>
+    </div>
+    <div id='clock'>8:10:45</div>
+    <div class='feeding-btn'>
+        
+            <button class='btn-feed' onclick="feedFish()" >Feed Now</button>
+        
+    </div>
+    <script>
+        function feedFish() {
+            fetch('/feed')
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+        // Calling showTime function at every second
+        setInterval(showTime, 1000);
+
+        // Defining showTime funcion
+        function showTime() {
+            // Getting current time and date
+            let time = new Date();
+            let hour = time.getHours();
+            let min = time.getMinutes();
+            let sec = time.getSeconds();
+            am_pm = 'AM';
+
+            // Setting time for 12 Hrs format
+            if (hour >= 12) {
+                if (hour > 12) hour -= 12;
+                am_pm = 'PM';
+            } else if (hour == 0) {
+                hr = 12;
+                am_pm = 'AM';
+            }
+
+            hour =
+                hour < 10 ? '0' + hour : hour;
+            min = min < 10 ? '0' + min : min;
+            sec = sec < 10 ? '0' + sec : sec;
+
+            let currentTime =
+                hour +
+                ':' +
+                min +
+                ':' +
+                sec +
+                am_pm;
+
+            // Displaying the time
+            document.getElementById(
+                'clock'
+            ).innerHTML = currentTime;
+        }
+
+        showTime();
+    </script>
+</body>
+
+</html>
